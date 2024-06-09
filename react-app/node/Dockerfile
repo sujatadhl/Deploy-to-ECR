@@ -6,4 +6,4 @@ COPY . .
 
 RUN npm install
 
-EXPOSE 4000
+EXPOSE 5173

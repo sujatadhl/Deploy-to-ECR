@@ -1,3 +1,12 @@
+resource "aws_ecr_repository" "sujata_ecr" {
+  name                 = var.name
+  image_tag_mutability = var.image_tag_mutability
+
+  image_scanning_configuration {
+    scan_on_push = var.scan_on_push
+  }
+}
+
 module "ec2" {
   for_each = var.name
   source                      = "terraform-aws-modules/ec2-instance/aws"
@@ -20,11 +29,3 @@ module "ec2" {
     
 }
 
-resource "aws_ecr_repository" "sujata_ecr" {
-  name                 = var.name
-  image_tag_mutability = var.image_tag_mutability
-
-  image_scanning_configuration {
-    scan_on_push = var.scan_on_push
-  }
-}
