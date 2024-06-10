@@ -38,6 +38,7 @@ jobs:
           run: aws s3 cp . s3://sujata-docker  --recursive
 
     Create-ec2-resources:
+       needs: upload-to-s3
       runs-on: ubuntu-latest
       steps:
         - name: Checkout code
