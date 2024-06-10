@@ -26,6 +26,7 @@ module "ec2" {
   tags = {
     Name = each.value
   }
+  user_data = file("userdata.sh")
     
 }
 
