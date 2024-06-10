@@ -47,6 +47,9 @@ jobs:
         - name: Setup Terraform
           uses: hashicorp/setup-terraform@v1
 
+        - name: Verify terraform directory
+          run: ls -la  
+
         - name: Terraform init
           run: |
             cd terraform
