@@ -34,5 +34,6 @@ variable "ssm_policy" {}
 variable "ec2_ecr_policy" {}
 variable "key_name" {}
 variable "name" {}
+variable "name_ecr" {}
 variable "image_tag_mutability" {}
 variable "scan_on_push" {}

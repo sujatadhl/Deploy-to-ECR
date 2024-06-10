@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "sujata_ecr" {
-  name                 = var.name
+  name                 = var.name_ecr
   image_tag_mutability = var.image_tag_mutability
 
   image_scanning_configuration {
