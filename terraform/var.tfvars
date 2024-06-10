@@ -13,8 +13,6 @@ ssm_policy                    = "arn:aws:iam::aws:policy/AmazonSSMManagedEC2Inst
 ec2_ecr_policy                = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
 image_tag_mutability          = "MUTABLE"
 scan_on_push                  = true
-name      = {
-   name1= "sujata-ecr"
-}
+name      = "sujata-ecr"
 
 ami_id    = "ami-0e001c9271cf7f3b9"
