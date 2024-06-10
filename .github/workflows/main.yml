@@ -11,7 +11,7 @@ env:
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     aws-access-token: ${{ secrets.AWS_SESSION_TOKEN }}
     aws-region: us-east-1
-    account-id: 426857564226
+    #account-id: 426857564226
     ecr-repo-name: sujata-ecr
 
 jobs:
