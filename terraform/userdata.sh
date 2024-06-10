@@ -19,20 +19,20 @@ cd /home/ubuntu/react-app
 
 # Build the Docker image for frontend
 cd react/
-docker build -t front-end:latest .
+docker build -t front-end:2.0 .
 
 # Tag the Docker image
-docker tag front-end:latest 426857564226.dkr.ecr.us-east-1.amazonaws.com/sujata-ecr
+docker tag front-end:2.0 426857564226.dkr.ecr.us-east-1.amazonaws.com/sujata-ecr
 
 # Push the Docker image to ECR
 docker push 426857564226.dkr.ecr.us-east-1.amazonaws.com/sujata-ecr
 
 # Build the Docker image for backend
 cd /home/ubuntu/react-app/node
-docker build -t back-end:latest .
+docker build -t back-end:1.0 .
 
 # Tag the Docker image
-docker tag back-end:latest 426857564226.dkr.ecr.us-east-1.amazonaws.com/sujata-ecr
+docker tag back-end:1.0 426857564226.dkr.ecr.us-east-1.amazonaws.com/sujata-ecr
 
 # Push the Docker image to ECR
 docker push 426857564226.dkr.ecr.us-east-1.amazonaws.com/sujata-ecr
@@ -42,5 +42,5 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 # Run docker-compose
-cd /home/ubuntu
+cd /home/ubuntu/react-app
 docker-compose up --build -d
