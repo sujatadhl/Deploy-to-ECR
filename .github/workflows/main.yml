@@ -86,8 +86,8 @@ jobs:
 
     #     - name: Push image to ECR
     #       run: |
-    #         docker push ${{ env.account_id }}.dkr.ecr.us-east-1.amazonaws.com/node:latest
-    #         docker push ${{ env.account_id }}.dkr.ecr.us-east-1.amazonaws.com/react:latest
+    #         docker push ${{ env.account_id }}.dkr.ecr.us-east-1.amazonaws.com/back-end:latest
+    #         docker push ${{ env.account_id }}.dkr.ecr.us-east-1.amazonaws.com/front-end:latest
             
             
 
