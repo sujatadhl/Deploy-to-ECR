@@ -3,7 +3,9 @@ version: '3'
 services: 
 
   back-end:
-    image: 426857564226.dkr.ecr.us-east-1.amazonaws.com/sujata-ecr:front-end
+    build: 
+      context: node
+    #image: 426857564226.dkr.ecr.us-east-1.amazonaws.com/sujata-ecr:front-end
     container_name: back-end
     working_dir: /usr/src/app
     networks: 
@@ -19,7 +21,9 @@ services:
        - db
 
   front-end:
-    image: 426857564226.dkr.ecr.us-east-1.amazonaws.com/sujata-ecr:back-end
+    build: 
+      context: react
+    #image: 426857564226.dkr.ecr.us-east-1.amazonaws.com/sujata-ecr:back-end
     container_name: front-end
     working_dir: /usr/src/app
     networks: 
