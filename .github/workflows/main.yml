@@ -1,0 +1,90 @@
+name: Push the Docker image to AWS ECR Repo
+on:
+    push:
+      branches:
+        - ec2-ecr
+    pull_request:
+      branches:
+        - main
+env:
+    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    aws-access-token: ${{ secrets.AWS_SESSION_TOKEN }}
+    aws-region: us-east-1
+    account-id: 426857564226
+    ecr-repo-name: sujata-ecr
+
+jobs:
+    upload-to-s3:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code 
+          uses: actions/checkout@v3
+
+        - name: Install AWS CLI
+          run: |
+            sudo apt-get update
+            sudo apt install -y awscli  
+    
+        - name: Ensure S3 bucket is created
+          run: |
+            BUCKET_NAME="sujata-docker"
+            if aws s3api head-bucket --bucket $BUCKET_NAME 2>/dev/null; then
+              aws s3 rb s3://$BUCKET_NAME --force
+            fi
+            aws s3api create-bucket --bucket $BUCKET_NAME --region us-east-1    
+        
+        - name: Add app files to s3
+          run: aws s3 cp react-app/ s3://sujata-docker  --recursive
+
+    Create-ec2-resources:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+
+        - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v1
+
+        - name: Terraform init
+          run: |
+            cd terraform
+            terraform init
+
+        - name: Terraform plan
+          run: |
+            cd terraform
+            terraform plan -var-file=var.tfvars
+
+        - name: Terraform init
+          run: |
+            cd terraform
+            terraform apply -var-file=var.tfvars -auto-aprove
+
+    # build-docker-images:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #     - name: Checkout repo
+    #       uses: actions/checkout@v3
+
+    #     - name: Build image for frontend and backend
+    #       run: |
+    #         cd react-app/node
+    #         docker build -t node .  
+    #         cd react-app/react
+    #         docker build -t react .   
+
+    #     - name: Login to Amazon ECR
+    #       id: login-ecr
+    #       uses: aws-actions/amazon-ecr-login@v2
+    #       with:
+    #         mask-password: 'false'
+
+    #     - name: Push image to ECR
+    #       run: |
+    #         docker push ${{ env.account_id }}.dkr.ecr.us-east-1.amazonaws.com/node:latest
+    #         docker push ${{ env.account_id }}.dkr.ecr.us-east-1.amazonaws.com/react:latest
+            
+            
+
+                
