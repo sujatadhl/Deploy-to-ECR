@@ -7,10 +7,10 @@ on:
       branches:
         - main
 env:
-    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    aws-access-token: ${{ secrets.AWS_SESSION_TOKEN }}
-    aws-region: us-east-1
+    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}  
+    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
+    AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }} 
+    AWS_DEFAULT_REGION: us-east-1
     #account-id: 426857564226
     ecr-repo-name: sujata-ecr
 
@@ -35,7 +35,7 @@ jobs:
             aws s3api create-bucket --bucket $BUCKET_NAME --region us-east-1    
         
         - name: Add app files to s3
-          run: aws s3 cp react-app/ s3://sujata-docker  --recursive
+          run: aws s3 cp . s3://sujata-docker  --recursive
 
     Create-ec2-resources:
       runs-on: ubuntu-latest
