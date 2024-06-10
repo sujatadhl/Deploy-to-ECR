@@ -19,7 +19,7 @@ cd /home/ubuntu/react-app
 
 # Build the Docker image for frontend
 cd react/
-docker build -t front-end.
+docker build -t front-end .
 
 # Tag the Docker image
 docker tag front-end 426857564226.dkr.ecr.us-east-1.amazonaws.com/sujata-ecr:1.0
