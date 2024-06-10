@@ -21,6 +21,7 @@ module "ec2" {
   iam_role_policies = {
     SSM = var.ssm_policy
     EC2 = var.ec2_ecr_policy
+    S3 = var.s3_policy
   }
   key_name = try(var.key_name, null)
   tags = {

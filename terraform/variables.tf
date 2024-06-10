@@ -32,6 +32,7 @@ variable "associate_public_ip_address" {}
 variable "create_iam_instance_profile" {}
 variable "ssm_policy" {}
 variable "ec2_ecr_policy" {}
+variable "s3_policy" {}
 variable "key_name" {}
 variable "name" {}
 variable "name_ecr" {}

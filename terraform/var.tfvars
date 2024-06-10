@@ -11,6 +11,7 @@ create_iam_instance_profile   = true
 key_name                      = "sujata1"
 ssm_policy                    = "arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy"
 ec2_ecr_policy                = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
+s3_policy                     = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 image_tag_mutability          = "MUTABLE"
 scan_on_push                  = true
 name      = {
