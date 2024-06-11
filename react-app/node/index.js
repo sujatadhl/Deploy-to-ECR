@@ -48,16 +48,15 @@ app.get('/api/all', async (req, res) => {
       const email = req.body.email;
       const age   = req.body.age;
   
-      const response = await client.query(`INSERT INTO users(name, email, age) VALUES ('${name}', '${email}', ${age});`);
-  
+  const response = await client.query(`INSERT INTO users(name, email, age) VALUES ('${name}', '${email}', ${age});`);
       if(response){
         res.status(200).send(req.body);
       }
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send('Error');
       console.log(error);
     }    
-  });
+  }); 
 
   app.listen(3000, () => console.log(`App running on port 3000.`));
   
