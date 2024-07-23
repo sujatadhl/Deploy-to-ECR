@@ -8,9 +8,9 @@ resource "aws_ecr_repository" "sujata_ecr" {
 }
 
 module "ec2" {
-  for_each = var.name
   source                      = "terraform-aws-modules/ec2-instance/aws"
   version                     = "5.5.0"
+  depends_on = [ aws_s3_bucket.sujata_ecr ]
   instance_type               = var.instance_type
   ami                         = var.ami_id
   associate_public_ip_address = var.associate_public_ip_address
@@ -23,11 +23,11 @@ module "ec2" {
     EC2 = var.ec2_ecr_policy
     S3 = var.s3_policy
   }
-  key_name = try(var.key_name, null)
-  tags = {
-    Name = each.value
-  }
   user_data = file("userdata.sh")
     
+}
+
+resource "aws_s3_bucket" "sujata_ecr" {
+  bucket = var.name 
 }
 

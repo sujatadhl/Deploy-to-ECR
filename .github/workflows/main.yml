@@ -11,32 +11,8 @@ env:
     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
     AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }} 
     AWS_DEFAULT_REGION: us-east-1
-    #account-id: 426857564226
-    # ecr-repo-name: sujata-ecr
 
-jobs:
-    upload-to-s3:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code 
-          uses: actions/checkout@v3
-
-        - name: Install AWS CLI
-          run: |
-            sudo apt-get update
-            sudo apt install -y awscli  
-    
-        - name: Ensure S3 bucket is created
-          run: |
-            BUCKET_NAME="sujata-docker"
-            if aws s3api head-bucket --bucket $BUCKET_NAME 2>/dev/null; then
-              aws s3 rb s3://$BUCKET_NAME --force
-            fi
-            aws s3api create-bucket --bucket $BUCKET_NAME --region us-east-1    
-        
-        - name: Add app files to s3
-          run: aws s3 cp . s3://sujata-docker  --recursive
-
+jobs: 
     Create-ec2-resources:
       needs: upload-to-s3
       runs-on: ubuntu-latest
@@ -46,9 +22,6 @@ jobs:
 
         - name: Setup Terraform
           uses: hashicorp/setup-terraform@v1
-
-        - name: Verify terraform directory
-          run: ls -la  
 
         - name: Terraform init
           run: |
