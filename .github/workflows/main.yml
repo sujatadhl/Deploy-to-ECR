@@ -1,0 +1,67 @@
+name: Push the Docker image to AWS ECR Repo
+on:
+    push:
+      branches:
+        - ec2-ecr
+    pull_request:
+      branches:
+        - main
+env:
+    AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}  
+    AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}  
+    AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }} 
+    AWS_DEFAULT_REGION: us-east-1
+
+jobs: 
+    Create-ec2-resources:
+      needs: upload-to-s3
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+
+        - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v1
+
+        - name: Terraform init
+          run: |
+            cd terraform
+            terraform init
+
+        - name: Terraform plan
+          run: |
+            cd terraform
+            terraform plan -var-file=var.tfvars
+
+        - name: Terraform apply
+          run: |
+            cd terraform
+            terraform apply -var-file=var.tfvars -auto-approve
+
+    # build-docker-images:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #     - name: Checkout repo
+    #       uses: actions/checkout@v3
+
+    #     - name: Build image for frontend and backend
+    #       run: |
+    #         cd react-app/node
+    #         docker build -t node .  
+    #         cd react-app/react
+    #         docker build -t react .   
+
+    #     - name: Login to Amazon ECR
+    #       id: login-ecr
+    #       uses: aws-actions/amazon-ecr-login@v2
+    #       with:
+    #         mask-password: 'false'
+
+    #     - name: Push image to ECR
+    #       run: |
+    #         docker push ${{ env.account_id }}.dkr.ecr.us-east-1.amazonaws.com/back-end:latest
+    #         docker push ${{ env.account_id }}.dkr.ecr.us-east-1.amazonaws.com/front-end:latest
+            
+            
+
+                
